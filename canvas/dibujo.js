@@ -1,4 +1,10 @@
+var texto = document.getElementById("texto_lineas");
+var boton = document.getElementById("botoncito");
+boton.addEventListener("click",dibujoPorClick);
+
+
 var d = document.getElementById("dibujito"); //para obtener el id del canvas
+var ancho = d.width;
 var lienzo = d.getContext("2d"); //Es un funcion del objeto canvas que permite obtener el area donde voy a dibujar
 
 //lienzo.beginPath(); //arrancar un trazo
@@ -10,7 +16,7 @@ var lienzo = d.getContext("2d"); //Es un funcion del objeto canvas que permite o
 //lienzo.stroke(); //dibuja la linea
 //lienzo.closePath();
 
-var lineas = 30;
+/*var lineas = 30;
 var l = 0;
 var xi, xf, yi;
 var colorcito = "red";
@@ -32,7 +38,7 @@ while(l < lineas)
 	dibujarLinea(colorcito, xi, 300, 300, yi); //Parte inferior izquierda
 	dibujarLinea(colorcito, xi, 0, 0, yi); //Parte superior derecha
 	l++;
-}
+}*/
 /*
 for(l = 0;l < lineas; l++)
 {
@@ -70,3 +76,31 @@ function dibujarLinea(color, xInicial, yInicial, xFinal, YFinal)
 	lienzo.closePath();
 }
 
+function dibujoPorClick()
+{
+	var lineas = parseInt(texto.value);
+	var l = 0;
+	var xi, xf, yi;
+	var colorcito = "red";
+	var espacio = ancho / lineas;
+
+	//Dibujar la lineas de los bordes
+	dibujarLinea(colorcito, 0, 0, 0, ancho);
+	dibujarLinea(colorcito, 0, ancho, ancho, ancho);
+	dibujarLinea(colorcito, 0, 0, ancho, 0);
+	dibujarLinea(colorcito, ancho, 0, ancho, ancho);
+
+
+	while(l < lineas)
+	{
+		yi = espacio * l;
+		xf = espacio * (l + 1);
+		xi = (ancho - 1) - (l * espacio);
+		dibujarLinea(colorcito, 0, yi, xf, ancho); //Parte inferior derecha
+		dibujarLinea(colorcito, xf, 0, ancho, yi); //Parte superior izquierda
+		dibujarLinea(colorcito, xi, ancho, ancho, yi); //Parte inferior izquierda
+		dibujarLinea(colorcito, xi, 0, 0, yi); //Parte superior derecha
+		l++;
+	}
+
+}
